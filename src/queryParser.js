@@ -5,8 +5,8 @@ function parseQuery(query) {
     const match = query.match(selectRegex);
 
     if (match) {
-        const [, fields, table,whereClause,whereString] = match;
-        const whereClauses = whereString ? parseWhereClause(whereString) : []; 
+        const [, fields, table, whereString] = match;
+    const whereClauses = whereString ? parseWhereClause(whereString) : []; 
         return {
             fields: fields.split(',').map(field => field.trim()),
             table: table.trim(),
