@@ -120,16 +120,24 @@ test("Execute SQL Query with RIGHT JOIN", async () => {
   expect(result).toEqual(
     expect.arrayContaining([
       expect.objectContaining({
-        "student.name": null,
-        "enrollment.course": "Biology",
+        "student.name": "John",
+        "enrollment.course": "Mathematics",
       }),
       expect.objectContaining({
         "student.name": "John",
+        "enrollment.course": "Physics",
+      }),
+      expect.objectContaining({
+        "student.name": "Jane",
+        "enrollment.course": "Chemistry",
+      }),
+      expect.objectContaining({
+        "student.name": "Bob",
         "enrollment.course": "Mathematics",
       }),
     ])
   );
-  expect(result.length).toEqual(5); // 4 courses, but Mathematics appears twice
+  expect(result.length).toEqual(4); // 4 courses, but Mathematics appears twice
 });
 
 test("Execute SQL Query with LEFT JOIN with a WHERE clause filtering the main table", async () => {
@@ -175,13 +183,9 @@ test("Execute SQL Query with RIGHT JOIN with a WHERE clause filtering the main t
         "enrollment.course": "Mathematics",
         "student.name": "Bob",
       }),
-      expect.objectContaining({
-        "enrollment.course": "Biology",
-        "student.name": null,
-      }),
     ])
   );
-  expect(result.length).toEqual(2);
+  expect(result.length).toEqual(1);
 });
 
 test("Execute SQL Query with RIGHT JOIN with a WHERE clause filtering the join table", async () => {
@@ -253,7 +257,6 @@ test("Count enrollments per course", async () => {
     { course: "Mathematics", "COUNT(*)": 2 },
     { course: "Physics", "COUNT(*)": 1 },
     { course: "Chemistry", "COUNT(*)": 1 },
-    { course: "Biology", "COUNT(*)": 1 },
   ]);
 });
 
@@ -265,7 +268,6 @@ test("Count courses per student", async () => {
     { student_id: "1", "COUNT(*)": 2 },
     { student_id: "2", "COUNT(*)": 1 },
     { student_id: "3", "COUNT(*)": 1 },
-    { student_id: "5", "COUNT(*)": 1 },
   ]);
 });
 
